@@ -1,32 +1,31 @@
-# Name of your site (displayed in the header)
-name: Prometheus
-# Short bio or description (displayed in the header)
-description: Web Developer and Tech Enthusiast
+name: Build and Deploy Jekyll Site to GitHub Pages
 
-# URL of your avatar or profile pic (GitHub profile picture URL or any image link)
-avatar: https://avatars.githubusercontent.com/yourusername
+on:
+  push:
+    branches:
+      - master  # or 'main' if you're using that
 
-# Footer social links (only fill in what you use)
-footer-links:
-  github: Prometheus
-  linkedin: your-linkedin-username
-  twitter: your-twitter-handle
-  email: your@email.com
-  rss: rss
-  youtube: user/yourchannelname
+jobs:
+  github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-# Enable Disqus (optional – set up a free Disqus account first)
-disqus:
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' # You can change this to match your Jekyll version
 
-# Google Analytics (optional – use your tracking ID)
-google_analytics:
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install
 
-# Your website URL (replace with your GitHub username)
-url: https://prometheus.github.io
+      - name: Build the site with Jekyll
+        run: bundle exec jekyll build
 
-# Only needed if using a subfolder for a project site
-baseurl: ""
-
-markdown: redcarpet
-highlighter: pygments
-permalin
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
