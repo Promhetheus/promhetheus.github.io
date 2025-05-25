@@ -1,31 +1,54 @@
-name: Build and Deploy Jekyll Site to GitHub Pages
+# Name of your site (displayed in the header)
+name: Prometheus
+# Short bio or description (displayed in the header)
+description: Web Developer and Tech Enthusiast
 
-on:
-  push:
-    branches:
-      - master  # or 'main' if you're using that
+# URL of your avatar or profile pic (GitHub profile picture URL or any image link)
+avatar: https://avatars.githubusercontent.com/yourusername
 
-jobs:
-  github-pages:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# Footer social links (only fill in what you use) 
+footer-links:
+  github: Prometheus
+  linkedin: your-linkedin-username
+  twitter: your-twitter-handle
+  email: your@email.com
+  rss: rss
+  youtube: user/yourchannelname
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1' # You can change this to match your Jekyll version
+# Enable Disqus (optional – set up a free Disqus account first)
+disqus: null
 
-      - name: Install Dependencies
-        run: |
-          gem install bundler
-          bundle install
+# Google Analytics (optional – use your tracking ID)
+google_analytics: null
 
-      - name: Build the site with Jekyll
-        run: bundle exec jekyll build
+# Your website URL (replace with your GitHub username)
+url: https://prometheus.github.io
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
+# Only needed if using a subfolder for a project site
+baseurl: ""
+
+markdown: redcarpet
+highlighter: pygments
+permalink: /:title/
+
+version: v1.1.0
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+sass:
+  style: :expanded
+
+gems:
+  - jekyll-sitemap
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
